@@ -15,15 +15,17 @@ const RandomPosts = () => {
   const [username, setUsername] = useState("");
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchUsers = setTimeout(async () => {
       try {
         const res = await axios.get(`users/searchUsers/s?username=${username}`);
         setUsers(res.data);
       } catch (error) {
         console.log(error);
       }
-    };
+    }, 500)
     fetchUsers();
+
+    return ()=> fetchUsers()
   }, [username]);
 
   const { data, isLoading, isError, error } = useQuery(
